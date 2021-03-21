@@ -1,0 +1,64 @@
+{
+  "name": "optimido_client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@apollo/client": "^3.3.11",
+    "@egjs/react-flicking": "^3.4.2",
+    "@types/react-transition-group": "^4.4.0",
+    "clsx": "^1.1.1",
+    "graphql": "^15.5.0",
+    "graphql-tag": "^2.11.0",
+    "graphql.macro": "^1.4.2",
+    "material-design-icons": "^3.0.1",
+    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.31",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-cookie": "^4.0.3",
+    "react-dom": "^16.13.1",
+    "react-easyfullscreen": "^1.1.0",
+    "react-grid-layout": "^1.1.1",
+    "react-moment": "^1.0.0",
+    "react-popover": "^0.5.10",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.3",
+    "react-tabs": "^3.1.1",
+    "react-transition-group": "^4.4.1",
+    "recharts": "^1.8.5",
+    "tailwindcss": "^1.8.10"
+  },
+  "scripts": {
+    "build:tailwind": "tailwindcss build src/tailwind.css -o src/tailwind.output.css",
+    "watch:tailwind": "tailwindcss build src/tailwind.css -o src/tailwind.output.css",
+    "prestart": "npm run build:tailwind",
+    "prebuild": "npm run build:tailwind",
+    "start": "npm run watch:tailwind && react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@fortawesome/fontawesome-free": "^5.14.0",
+    "@types/react-router-dom": "^5.1.7",
+    "eslint-plugin-react": "^7.20.6",
+    "sass": "^1.26.10",
+    "sass-loader": "^9.0.3"
+  }
+}

@@ -1,0 +1,29 @@
+@import "../node_modules/material-design-icons/iconfont/material-icons.css";
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-size: 16px;
+    font-weight: 400;
+    background-color: #edf2f7;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+::-webkit-scrollbar:hover {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-button {
+    /*display: none;*/
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 50px;
+    background-color: #D4D4D9;
+}
