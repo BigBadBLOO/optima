@@ -1,0 +1,7 @@
+mutation LoginUser($loginData: LoginUserDTO!) {
+    login(loginData: $loginData) {
+        id
+        username,
+        token
+    }
+}

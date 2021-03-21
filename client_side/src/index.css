@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-size: 16px;
+    font-weight: 400;
+    background-color: #edf2f7;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+::-webkit-scrollbar:hover {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-button {
+    /*display: none;*/
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 50px;
+    background-color: #D4D4D9;
+}
+
