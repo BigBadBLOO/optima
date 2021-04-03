@@ -1,7 +1,13 @@
 mutation LoginUser($loginData: LoginUserDTO!) {
     login(loginData: $loginData) {
         id
-        username,
+        username
+        isConfirmEmail
         token
+        platforms{
+            id
+            platformName
+            type
+        }
     }
 }

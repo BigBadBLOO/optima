@@ -14,8 +14,8 @@ const PageFooter: React.FC = () => {
             <span className="text-gray-600 mx-2">Политика конфиденциальности</span>
           </Link>
         </div>
-        <p className="mb-3 text-left text-gray-600 my-auto md:order-first">OPTIMIDO</p>
-        <p className="mb-3 text-right text-gray-600 my-auto">@ 2020 Optimido</p>
+        <p className="mb-3 text-left text-gray-600 my-auto md:order-first">OPTIMA</p>
+        <p className="mb-3 text-right text-gray-600 my-auto">@ 2020 Optima</p>
       </div>
 
   )

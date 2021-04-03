@@ -1,3 +1,4 @@
+//core
 import { Module } from '@nestjs/common';
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {PassportModule} from "@nestjs/passport";
@@ -6,9 +7,11 @@ import {JwtModule} from "@nestjs/jwt";
 import {UserService} from "./user.service";
 import {User} from "./user.entity";
 import {UserResolver} from "./user.resolver";
+
+
+//config
 import {jwtConstants} from "../../config/user.config";
 import {JwtStrategy} from "./auth/jwt.strategy";
-
 
 @Module({
     imports: [
@@ -20,6 +23,6 @@ import {JwtStrategy} from "./auth/jwt.strategy";
         PassportModule,
     ],
     providers: [UserService, UserResolver, JwtStrategy],
-    exports: [UserResolver],
+    exports: [UserService],
 })
 export class UserModule {}

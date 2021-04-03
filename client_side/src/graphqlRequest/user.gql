@@ -1,6 +1,12 @@
-query GetCurrentUser{
+query User{
     getCurrentUser {
         id
         username
+        isConfirmEmail
+        platforms{
+            id
+            platformName
+            type
+        }
     }
 }

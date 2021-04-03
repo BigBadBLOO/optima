@@ -1,0 +1,45 @@
+version: "3"
+services:
+
+  server:
+    build: ./server_side
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    links:
+      - "db:pgsql-server"
+    container_name: server_side
+
+  client:
+    build: ./client_side
+    ports:
+      - "80:80"
+    container_name: client_side
+
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=optima
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=dangerousefim
+    ports:
+      - "5432:5432"
+    container_name: postgres
+
+  pgadmin:
+    image: dpage/pgadmin4
+    volumes:
+      - ./data/pgadmin:/root/.pgadmin
+    ports:
+      - "8080:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    depends_on:
+      - db
+    links:
+      - "db:pgsql-server"
+    container_name: pgadmin
