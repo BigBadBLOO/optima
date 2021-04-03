@@ -2,6 +2,13 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Platform {
+  id: Int!
+  platformName: String!
+  type: String!
+  user: User!
+}
+
 type User {
   id: Int!
   username: String!
@@ -11,6 +18,7 @@ type User {
   twoAuth: Boolean!
   balance: Int!
   group: String!
+  platforms: [Platform!]
 }
 
 type UserWithToken {
@@ -22,6 +30,7 @@ type UserWithToken {
   twoAuth: Boolean!
   balance: Int!
   group: String!
+  platforms: [Platform!]
   token: String!
 }
 
@@ -31,9 +40,16 @@ type Query {
 
 type Mutation {
   login(loginData: LoginUserDTO!): UserWithToken!
+  signUp(signUpData: SignUpUserDTO!): UserWithToken!
 }
 
 input LoginUserDTO {
+  email: String!
+  password: String!
+}
+
+input SignUpUserDTO {
+  username: String!
   email: String!
   password: String!
 }

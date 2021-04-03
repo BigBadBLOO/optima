@@ -1,0 +1,13 @@
+mutation SignUpUser($signUpData: SignUpUserDTO!) {
+    signUp(signUpData: $signUpData) {
+        id
+        username
+        isConfirmEmail
+        token
+        platforms{
+          id
+          platformName
+          type
+        }
+    }
+}

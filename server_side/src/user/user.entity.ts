@@ -1,5 +1,7 @@
-import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
 import {Field, Int, ObjectType} from "@nestjs/graphql";
+import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {Platform} from "../platform/platform.entity";
+
 
 export enum UserGroup {
     ADMIN = "ADMIN",
@@ -19,7 +21,7 @@ export class User {
     username: string;
 
     @Field()
-    @Column({ nullable: false, default: ''})
+    @Column({ nullable: false, default: '', unique: true})
     email: string;
 
     @Field()
@@ -45,6 +47,10 @@ export class User {
         default: UserGroup.CLIENT
     })
     group: UserGroup;
+
+    @Field(() => [Platform], { nullable: true })
+    @OneToMany(() => Platform, platform => platform.user)
+    platforms: Platform[];
 }
 
 @ObjectType()
@@ -52,3 +58,5 @@ export class UserWithToken extends User{
     @Field(type => String)
     token: string
 }
+
+

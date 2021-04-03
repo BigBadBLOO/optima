@@ -3,10 +3,11 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
-    target: 'node',
+    target: 'web',
     entry: path.join(__dirname, 'src', 'index.tsx'),
     output: {
         path: path.join(__dirname, "/dist"),
+        publicPath: '/',
         filename: "[name].bundle.js",
         clean: true
     },
@@ -21,18 +22,33 @@ module.exports = {
         port: 3000,
         historyApiFallback: true,
         hot: true,
+        open: true
     },
     module: {
         rules: [
             {
-                test: /\.tsx?$/,
-                use: 'ts-loader',
-                exclude: '/node_modules/'
+                test: /\.(ts|js)x?$/i,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: [
+                            "@babel/preset-env",
+                            "@babel/preset-react",
+                            "@babel/preset-typescript",
+                        ]
+                    }
+                }
             },
             {
-                test: /\.css$/,
+                test: /\.(s*)css$/,
                 include: path.resolve(__dirname, 'src'),
-                use: ["style-loader", "css-loader", "postcss-loader"]
+                use: [
+                    "style-loader",
+                    "css-loader",
+                    "sass-loader",
+                    "postcss-loader"
+                ]
             },
             {
                 test: /\.gql$/,
@@ -48,11 +64,24 @@ module.exports = {
                     },
                 ],
             },
+            {
+                test: /\.(woff(2)?|ttf|eot|otf)(\?v=\d+\.\d+\.\d+)?$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]',
+                            outputPath: 'fonts/'
+                        }
+                    }
+                ]
+            }
         ]
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: "./src/public/index.html"
+            template: "./src/public/index.html",
+            favicon: "./src/public/images/favicon.ico"
         })
     ]
 };

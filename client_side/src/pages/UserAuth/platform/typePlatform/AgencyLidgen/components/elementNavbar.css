@@ -1,0 +1,17 @@
+.myNavbarAnimation-enter {
+    opacity: 0;
+}
+.myNavbarAnimation-enter-active {
+    opacity: 1;
+    transition: opacity 2000ms;
+}
+.myNavbarAnimation-exit {
+    opacity: 1;
+}
+.myNavbarAnimation-exit-active {
+    opacity: 0;
+    transition: opacity 300ms;
+}
+
+
+

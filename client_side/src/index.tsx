@@ -13,43 +13,37 @@ import App from "@/App";
 
 //config
 import {serverURI} from "@/config/serverURI";
-import rootReducer from "@redux/rootReducer";
 import * as serviceWorker from '@/serviceWorker';
 
 //styles
-import "./index.css"
-import "./public/css/fontRoboto.css"
+import "./index.scss"
 
 
 const httpLink = createHttpLink({
-    uri: `${serverURI}/graphql`,
+  uri: `${serverURI}/graphql`,
 });
 
 const authLink = setContext((_, {headers}) => {
-    const token = Cookies.get('token');
-    return {
-        headers: {
-            ...headers,
-            authorization: token ? `Bearer ${token}` : "",
-        }
+  const token = Cookies.get('token');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
     }
+  }
 });
 
 const client = new ApolloClient({
-    link: authLink.concat(httpLink),
-    cache: new InMemoryCache()
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache()
 });
 
-const store = createStore(rootReducer);
-
 const application = (
-    <ApolloProvider client={client}>
-        <Provider store={store}>
-            <BrowserRouter>
-                <App/>
-            </BrowserRouter>
-        </Provider>
-    </ApolloProvider>
+  <ApolloProvider client={client}>
+    <BrowserRouter>
+      <App/>
+    </BrowserRouter>
+  </ApolloProvider>
 )
 
 ReactDOM.render(application, document.getElementById('root'));
