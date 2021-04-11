@@ -5,7 +5,7 @@ import React, {useMemo} from "react";
 import Header from "@pages/UserAuth/platform/components/header/Header";
 
 //static data
-import header_navigation from "@pages/UserAuth/platform/typePlatform/AgencyLidgen/static_data/header_navigation";
+import header_navigation from "@pages/UserAuth/platform/typePlatform/TrafficArbitrage/static_data/header_navigation";
 
 //pages
 import PageNotFound from "@pages/ErrorPages/PageNotFound404";
@@ -14,7 +14,7 @@ import PageNotFound from "@pages/ErrorPages/PageNotFound404";
 import {PageType} from "@pages/UserAuth/platform/Platform";
 
 
-const AgencyLidgen: React.FC<PageType> = ({pathToPlatform, activePage, platform, user}) => {
+const TrafficArbitrage: React.FC<PageType> = ({pathToPlatform, activePage, platform, user}) => {
 
   let active_page_jsx = <PageNotFound/>
 
@@ -42,4 +42,4 @@ const AgencyLidgen: React.FC<PageType> = ({pathToPlatform, activePage, platform,
   )
 }
 
-export default AgencyLidgen
+export default TrafficArbitrage

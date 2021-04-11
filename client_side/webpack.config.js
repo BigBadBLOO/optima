@@ -1,6 +1,8 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest')
 
 module.exports = {
     target: 'web',
@@ -81,7 +83,31 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: "./src/public/index.html",
-            favicon: "./src/public/images/favicon.ico"
+            favicon: "./src/public/images/favicon.ico",
+            title: 'OPTIMA',
+            minify: {
+                removeComments: true,
+                collapseWhitespace: true
+            }
+
+        }),
+        new WorkboxPlugin.GenerateSW({
+            clientsClaim: true,
+            skipWaiting: true
+        }),
+        new WebpackPwaManifest({
+            name: 'OPTIMA',
+            short_name: 'OPTIMA',
+            description: 'OPTIMA',
+            theme_color: "#e0bb87",
+            background_color: "#42a3e2",
+            display: "standalone",
+            icons: [
+                {
+                    src: path.join(__dirname, 'src/public/images', 'logo-small.svg'),
+                    sizes: [96, 128, 192, 256, 384, 512]
+                },
+            ]
         })
     ]
 };

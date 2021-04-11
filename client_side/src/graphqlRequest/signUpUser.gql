@@ -2,12 +2,19 @@ mutation SignUpUser($signUpData: SignUpUserDTO!) {
     signUp(signUpData: $signUpData) {
         id
         username
+        group
         isConfirmEmail
         token
         platforms{
-          id
-          platformName
-          type
+            id
+            platformName
+            type
         }
+        platform{
+            id
+            platformName
+            type
+        }
+
     }
 }

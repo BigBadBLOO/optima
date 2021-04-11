@@ -7,6 +7,7 @@ type Platform {
   platformName: String!
   type: String!
   user: User!
+  users: [User!]!
 }
 
 type User {
@@ -19,6 +20,7 @@ type User {
   balance: Int!
   group: String!
   platforms: [Platform!]
+  platform: Platform
 }
 
 type UserWithToken {
@@ -31,6 +33,7 @@ type UserWithToken {
   balance: Int!
   group: String!
   platforms: [Platform!]
+  platform: Platform
   token: String!
 }
 
