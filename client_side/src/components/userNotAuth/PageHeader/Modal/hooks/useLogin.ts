@@ -6,13 +6,13 @@ import Cookies from "js-cookie";
 
 export default function useLogin() {
   const [email, setEmail] = useState('');
-  // const [validEmail, setValidEmail] = useState(true);
   const [errorEmail, setErrorEmail] = useState('');
   const [password, setPassword] = useState('');
   const [validPassword, setValidPassword] = useState(true);
 
   const [loginMutation] = useMutation(LoginUser, {
     update(cache, {data:{login}}) {
+      console.log(cache, login)
       cache.writeQuery({
         query: User,
         data: {

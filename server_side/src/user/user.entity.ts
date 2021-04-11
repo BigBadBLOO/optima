@@ -1,16 +1,24 @@
 import {Field, Int, ObjectType} from "@nestjs/graphql";
-import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, Index, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {Platform} from "../platform/platform.entity";
 
 
 export enum UserGroup {
     ADMIN = "ADMIN",
     CLIENT = "CLIENT",
+    CLIENT_ADMIN = "CLIENT_ADMIN",
+    CLIENT_PROJECT_MANAGER = "CLIENT_PROJECT_MANAGER",
+    CLIENT_TEAM_LEAD = "CLIENT_TEAM_LEAD",
+    CLIENT_TRAFFIC_MANAGER = "CLIENT_TRAFFIC_MANAGER",
+    CLIENT_MANAGER = "CLIENT_MANAGER",
+    CLIENT_CLIENT = "CLIENT_CLIENT",
+    CLIENT_CONTRACTOR = "CLIENT_CONTRACTOR",
 }
 
 
 @ObjectType()
 @Entity()
+@Index(["email", "platform"], { unique: true })
 export class User {
     @Field(type => Int)
     @PrimaryGeneratedColumn()
@@ -21,7 +29,7 @@ export class User {
     username: string;
 
     @Field()
-    @Column({ nullable: false, default: '', unique: true})
+    @Column({ nullable: false, default: ''})
     email: string;
 
     @Field()
@@ -51,6 +59,10 @@ export class User {
     @Field(() => [Platform], { nullable: true })
     @OneToMany(() => Platform, platform => platform.user)
     platforms: Platform[];
+
+    @Field(() => Platform, { nullable: true })
+    @ManyToOne(() => Platform, platform => platform.users)
+    platform: Platform
 }
 
 @ObjectType()

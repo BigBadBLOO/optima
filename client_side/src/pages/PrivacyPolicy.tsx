@@ -1,15 +1,16 @@
+//core
 import React from "react";
-
-import Footer from "../components/Footer/Footer";
-import MyModal from "../components/Modal/Modal";
 import {Link} from "react-router-dom";
-import {HeaderForNonAuthUser} from "../components/Header/Header";
+
+//components
+import PageHeader from "@components/userNotAuth/PageHeader";
+import PageFooter from "@components/userNotAuth/PageFooter";
 
 function PrivacyPolicy() {
 
   return (
     <div className="bg-white">
-      <HeaderForNonAuthUser/>
+      <PageHeader/>
       <Link to="/">
         <span className="mx-2">Назад</span>
       </Link>
@@ -29,9 +30,7 @@ function PrivacyPolicy() {
           1.4. Начиная использовать какой-либо сервис/его отдельные функции, либо пройдя процедуру регистрации, Пользователь считается принявшим условия Соглашения в полном объеме, без всяких оговорок и исключений. В случае несогласия Пользователя с какими-либо из положений Соглашения, Пользователь не вправе использовать сервисы Яндекса. В случае если Яндексом были внесены какие-либо изменения в Соглашение в порядке, предусмотренном пунктом 1.3 Соглашения, с которыми Пользователь не согласен, он обязан прекратить использование сервисов Яндекса.
         </span>
       </div>
-
-      <Footer/>
-      <MyModal/>
+      <PageFooter/>
     </div>
   )
 }

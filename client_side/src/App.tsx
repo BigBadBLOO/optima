@@ -15,8 +15,8 @@ const App: React.FC = () => {
   const {loading, error, data} = useQuery(User);
   if (loading) return <GlobalLoader/>;
   if (error) return <RouterNavbarNoAuth/>;
-  console.log(data)
-  return <RouterNavbar/>
+  if (data && data.getCurrentUser.group === 'CLIENT') return <RouterNavbar/>
+  return <RouterNavbarNoAuth/>
 }
 
 export default App;

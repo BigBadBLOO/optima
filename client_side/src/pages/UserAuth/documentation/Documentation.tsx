@@ -1,8 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-function Documentation() {
-
+const Documentation: React.FC = () => {
   return (
     <>
       <div className="bg-white">

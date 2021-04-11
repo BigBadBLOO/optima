@@ -4,39 +4,57 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";
 import {JwtService} from "@nestjs/jwt";
 
+const bcrypt = require('bcrypt');
+
 //entity
 import {User, UserWithToken} from "./user.entity";
 import {LoginUserDTO} from "./dto/login.dto";
 import {SignUpUserDTO} from "./dto/signUp.dto";
 
+
 @Injectable()
 export class UserService {
-    constructor(
-        @InjectRepository(User)
-        private userRepository: Repository<User>,
-        private jwtService: JwtService
-    ) {}
+  constructor(
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
+    private jwtService: JwtService
+  ) {
+  }
 
-    async login(loginData: LoginUserDTO): Promise<UserWithToken | Error> {
-        const user = await this.userRepository.findOne(loginData, {relations: ["platforms"]});
-        if(!user) throw new Error('Пользователь не существует')
-        const payload = { username: user.username}
-        const token = {token: this.jwtService.sign(payload)}
-        return { ...user, ...token}
-    }
+  async login(loginData: LoginUserDTO): Promise<UserWithToken | Error> {
+    const {password, ...data} = loginData
 
-    async signUp(signUpData: SignUpUserDTO): Promise<UserWithToken> {
-        const user = await this.userRepository.save(signUpData);
-        const payload = { username: user.username}
-        const token = {token: this.jwtService.sign(payload)}
-        return { ...user, ...token}
-    }
+    const user = await this.userRepository.findOne({
+      ...data,
+      platform: null
+    }, {relations: ["platforms", "platform"]});
 
-    findByUsername(username: string): Promise<User> {
-        return this.userRepository.findOne({username}, {relations: ["platforms"]});
-    }
+    const isPasswordMatching = user && await bcrypt.compare(password, user.password);
 
-    async remove(id: string): Promise<void> {
-        await this.userRepository.delete(id);
-    }
+    if (!user || !isPasswordMatching) throw new Error('Пользователь не существует')
+    const payload = {email: user.email}
+    const token = {token: this.jwtService.sign(payload)}
+    return {...user, ...token}
+  }
+
+  async signUp(signUpData: SignUpUserDTO): Promise<UserWithToken> {
+    const {email} = signUpData
+    const user_temp = await this.userRepository.findOne({email, platform: null});
+
+    if (user_temp) throw new Error('Пользователь уже существует')
+    
+    const password = await bcrypt.hash(signUpData.password, 10);
+    const user = await this.userRepository.save({...signUpData, password});
+    const payload = {email: user.email}
+    const token = {token: this.jwtService.sign(payload)}
+    return {...user, ...token}
+  }
+
+  findByEmail(email: string): Promise<User> {
+    return this.userRepository.findOne({email}, {relations: ["platforms", "platform"]});
+  }
+
+  async remove(id: string): Promise<void> {
+    await this.userRepository.delete(id);
+  }
 }

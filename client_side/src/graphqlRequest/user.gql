@@ -2,8 +2,14 @@ query User{
     getCurrentUser {
         id
         username
+        group
         isConfirmEmail
         platforms{
+            id
+            platformName
+            type
+        }
+        platform{
             id
             platformName
             type

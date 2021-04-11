@@ -4,7 +4,7 @@ import MyModal from "../components/Modal/Modal";
 import Footer from "../components/Footer/Footer";
 import Header, {HeaderForNonAuthUser} from "../components/Header/Header";
 import Body, {BodyForNonAuthUser} from "../components/Body/Body";
-import Documentation from "./Documentation";
+import Documentation from "./UserAuth/documentation/Documentation";
 import NewPlatform from "./NewPlatform";
 import {Route} from "react-router-dom";
 import Settings from "./Settings";

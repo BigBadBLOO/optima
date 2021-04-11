@@ -7,7 +7,6 @@ import MyModal from "@components/Modal/Modal";
 import ModalHeader from "@components/userNotAuth/PageHeader/Modal/ModalHeader";
 import ModalBody from "@components/userNotAuth/PageHeader/Modal/ModalBody";
 import {LinkForScroll} from "@components/userNotAuth/PageHeader/utils/utils";
-import {type} from "os";
 
 
 interface IHeader {
@@ -17,6 +16,7 @@ interface IHeader {
 }
 
 type ModalType = 'login' | 'signUp'
+
 const PageHeader: React.FC<IHeader> = ({refToPossibility, refToTariff, refToModules}) => {
   const [showModal, setShowModal] = useState(false)
   const [modalType, setModalType] = useState('') // login or signUp
@@ -47,8 +47,8 @@ const PageHeader: React.FC<IHeader> = ({refToPossibility, refToTariff, refToModu
           {blockWithRef_jsx}
         </div>
         <div className="items-center ml-auto">
-          <span className="text-brand-base px-2 cursor-pointer" onClick={login}>Вход</span>
-          <span className="text-brand-base px-2 cursor-pointer" onClick={signUp}>Регистрация</span>
+          <span className="text-gold px-2 cursor-pointer" onClick={login}>Вход</span>
+          <span className="text-gold px-2 cursor-pointer" onClick={signUp}>Регистрация</span>
         </div>
       </div>
       <MyModal show={showModal} showModal={setShowModal}>

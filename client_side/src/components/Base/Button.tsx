@@ -34,7 +34,7 @@ export const Button: React.FC<IButtonProps> = ({icon, type, text, onClick, class
     >
       {
         icon
-          ? <i className="material-icons float-left mr-1">{icon}</i>
+          ? <i className="material-icons float-left mr-1 my-auto">{icon}</i>
           : ''
       }
       {

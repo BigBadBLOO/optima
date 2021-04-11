@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany} from 'typeorm';
 import {Field, Int, ObjectType} from "@nestjs/graphql";
 import {User} from "../user/user.entity";
 
@@ -30,5 +30,9 @@ export class Platform {
   @Field(() => User)
   @ManyToOne(() => User, user => user.platforms)
   user: User;
+
+  @Field(() => [User])
+  @OneToMany(() => User, user => user.platform)
+  users: User;
 }
 
