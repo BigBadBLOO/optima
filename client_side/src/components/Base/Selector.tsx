@@ -1,66 +1,155 @@
 import React, {useState} from "react";
 import Select from 'react-select';
 
-type SelectableButtonTypes = 'primary' | 'secondary'
+// #TODO сделать норальный селектор
+type SelectableButtonTypes = 'primary' | 'secondary' | 'modal'
 
 interface ISelectorProps {
-  type: SelectableButtonTypes
-  value: any,
-  onChange: (e?: any) => void
-  className?: string,
-  options: any
+    type: SelectableButtonTypes
+    value: any,
+    onChange: (e?: any) => void
+    className?: string,
+    isMulti?: boolean
+    options: any
 }
 
-const customStyles = {
-  control: styles => ({ ...styles, backgroundColor: '#B4B4BF', height: "100%" }),
-  option: (styles, { data, isDisabled, isFocused, isSelected }) => {
-    const color = data.color;
-    return {
-      ...styles,
-      backgroundColor: isDisabled
-        ? null
-        : isSelected
-          ? data.color
-          : null,
-      color: isDisabled
-        ? '#ccc'
-        : isSelected
-          ? 'black'
-          : data.color,
-      cursor: isDisabled ? 'not-allowed' : 'default',
+const primaryStyles = {
+    control: styles => ({...styles, backgroundColor: '#B4B4BF', height: "100%"}),
+    option: (styles, {data, isDisabled, isFocused, isSelected}) => {
+        const color = data.color;
+        return {
+            ...styles,
+            backgroundColor: isDisabled
+                ? null
+                : isSelected
+                    ? data.color
+                    : null,
+            color: isDisabled
+                ? '#ccc'
+                : isSelected
+                    ? 'black'
+                    : data.color,
+            cursor: isDisabled ? 'not-allowed' : 'default',
 
-      ':active': {
-        ...styles[':active'],
-        backgroundColor: !isDisabled && (isSelected ? data.color : null),
-      },
-    };
-  },
-  placeholder: (styles) => {
-    return ({ marginLeft: '2px', marginRight: '2px', position: 'relative' , color: 'white'})
-  },
-  singleValue: (styles) => {
-    return ({ marginLeft: '2px', marginRight: '2px', position: 'relative' , color: 'white'})
-  },
+            ':active': {
+                ...styles[':active'],
+                backgroundColor: !isDisabled && (isSelected ? data.color : null),
+            },
+        };
+    },
+    placeholder: (styles) => {
+        return ({marginLeft: '2px', marginRight: '2px', position: 'relative', color: 'white'})
+    },
+    singleValue: (styles) => {
+        return ({marginLeft: '2px', marginRight: '2px', position: 'relative', color: 'white'})
+    },
 };
 
-export const Selector: React.FC<ISelectorProps> = ({type, value, onChange, className, options}) => {
+const secondaryStyles = {
+    control: styles => ({...styles, backgroundColor: '#B4B4BF', height: "100%"}),
+    option: (styles, {data, isDisabled, isFocused, isSelected}) => {
+        const color = data.color;
+        return {
+            ...styles,
+            backgroundColor: isDisabled
+                ? null
+                : isSelected
+                    ? data.color
+                    : null,
+            color: isDisabled
+                ? '#ccc'
+                : isSelected
+                    ? 'black'
+                    : data.color,
+            cursor: isDisabled ? 'not-allowed' : 'default',
 
-  const classes = [
-    // 'rounded-md relative p-2 text-left cursor-pointer focus:outline-none'
-  ]
+            ':active': {
+                ...styles[':active'],
+                backgroundColor: !isDisabled && (isSelected ? data.color : null),
+            },
+        };
+    },
+    placeholder: (styles) => {
+        return ({marginLeft: '2px', marginRight: '2px', position: 'relative', color: 'white'})
+    },
+    singleValue: (styles) => ({
+            marginLeft: '2px',
+            marginRight: '2px',
+            position: 'relative',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap'
+        }
+    )
+    // input: styles => {
+    //     return { display: 'none'}
+    // }
+};
 
-  classes.push(className)
+const modalStyles = {
+    container: styles => {
+        return styles
+    },
+    control: styles => {
+        return {
+            ...styles,
+            ':hover': {
+                ...styles[':hover'],
+                borderColor: '#E0BB87',
+            }
+        }
+    },
+    option: (styles, {data, isDisabled, isFocused, isSelected}) => {
+        return {
+            ...styles,
+            backgroundColor: isDisabled
+                ? null
+                : isSelected
+                    ? data.color
+                    : null,
+            color: isDisabled
+                ? '#ccc'
+                : isSelected
+                    ? '#E0BB87'
+                    : 'data.color',
+            cursor: isDisabled ? 'not-allowed' : 'default',
 
-  if (type === 'primary') classes.push('text-white bg-gold hover:bg-gold-hover')
-  else if (type === 'secondary') classes.push('text-white bg-myGray hover:bg-myGray-hover')
+            ':active': {
+                ...styles[':active'],
+                backgroundColor: !isDisabled && (isSelected ? '#E0BB87' : null),
+            },
+        };
+    },
+    placeholder: (styles) => {
+        return ({marginLeft: '2px', marginRight: '2px', position: 'relative'})
+    },
+    singleValue: (styles) => {
+        return ({
+            marginLeft: '2px', marginRight: '2px', position: 'relative', overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap'
+        })
+    },
+    input: styles => {
+        return {display: 'none'}
+    }
+};
 
-  return (
-    <Select
-      onChange={onChange}
-      value={value}
-      options={options}
-      getOptionValue={option => option.value}
-      styles={customStyles}
-    />
-  )
+export const Selector: React.FC<ISelectorProps> = ({type, isMulti = false, value, onChange, options}) => {
+    let style = primaryStyles
+
+    if (type === 'secondary') style = secondaryStyles
+    else if (type === 'modal') style = modalStyles
+
+    return (
+        <Select
+            isMulti={isMulti}
+            onChange={onChange}
+            value={value}
+            options={options}
+            getOptionValue={option => option.value}
+            styles={style}
+            placeholder="Выберите..."
+        />
+    )
 }

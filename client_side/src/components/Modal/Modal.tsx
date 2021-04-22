@@ -5,7 +5,7 @@ import CSSTransition from "react-transition-group/CSSTransition";
 //styles
 import './modal.css'
 
-interface IModalProps {
+export interface IModalProps {
     show: boolean,
     showModal: (arg1: boolean) => void
 }
@@ -15,7 +15,7 @@ const MyModal: React.FC<IModalProps> = ({show, showModal, children}) => {
         <CSSTransition in={show} timeout={200} unmountOnExit classNames="myModalAnimation">
             <div className="fixed z-10 inset-0 overflow-y-auto">
                 <div className="fixed inset-0 transition-opacity">
-                    <div className="absolute inset-0 bg-gray-500 opacity-75" onClick={() => showModal()}/>
+                    <div className="absolute inset-0 bg-gray-500 opacity-50" onClick={() => showModal(false)}/>
                 </div>
                 <div className="flex justify-center py-12 px-8">
                     <div

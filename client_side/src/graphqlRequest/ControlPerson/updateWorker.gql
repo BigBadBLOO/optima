@@ -1,0 +1,3 @@
+mutation AddWorker($updateWorkerData: UpdateWorkerDTO!) {
+    updateWorker(updateWorkerData: $updateWorkerData)
+}

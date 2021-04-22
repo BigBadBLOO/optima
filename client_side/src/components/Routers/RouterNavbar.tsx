@@ -4,7 +4,7 @@ import {Route, Switch} from "react-router-dom";
 
 //components
 import Home from "@pages/UserAuth/home/Home";
-import Platform from "@pages/UserAuth/platform/Platform";
+import Platform from "@pages/platform/Platform";
 import PageNotFound from "@pages/ErrorPages/PageNotFound404";
 import Documentation from "@pages/UserAuth/Documentation/Documentation";
 

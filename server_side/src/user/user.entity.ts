@@ -1,6 +1,9 @@
-import {Field, Int, ObjectType} from "@nestjs/graphql";
+//core
+import {Field, InputType, Int, ObjectType} from "@nestjs/graphql";
 import {Column, Entity, Index, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
-import {Platform} from "../platform/platform.entity";
+
+//entity
+import {Offer, Platform} from "../platform/platform.entity";
 
 
 export enum UserGroup {
@@ -15,40 +18,40 @@ export enum UserGroup {
     CLIENT_CONTRACTOR = "CLIENT_CONTRACTOR",
 }
 
-
 @ObjectType()
+@InputType('UserInput')
 @Entity()
-@Index(["email", "platform"], { unique: true })
+@Index(["email", "platform"], {unique: true})
 export class User {
-    @Field(type => Int)
+    @Field(type => Int, {nullable: true})
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Field()
-    @Column({ nullable: false, default: ''})
+    @Field({nullable: true})
+    @Column({nullable: false, default: ''})
     username: string;
 
-    @Field()
-    @Column({ nullable: false, default: ''})
+    @Field({nullable: true})
+    @Column({nullable: false, default: ''})
     email: string;
 
-    @Field()
-    @Column({ nullable: false, default: ''})
+    @Field({nullable: true})
+    @Column({nullable: false, default: ''})
     password: string;
 
-    @Field()
-    @Column({ default: false })
+    @Field({nullable: true})
+    @Column({default: false})
     isConfirmEmail: boolean;
 
-    @Field()
-    @Column({ default: false })
+    @Field({nullable: true})
+    @Column({default: false})
     twoAuth: boolean;
 
-    @Field(type => Int)
-    @Column({ default: 0 })
+    @Field(type => Int, {nullable: true})
+    @Column({default: 0})
     balance: number;
 
-    @Field()
+    @Field({nullable: true})
     @Column({
         type: "enum",
         enum: UserGroup,
@@ -56,19 +59,39 @@ export class User {
     })
     group: UserGroup;
 
-    @Field(() => [Platform], { nullable: true })
+    // for platform's work and their users
+    @Field(() => [Platform], {nullable: true})
     @OneToMany(() => Platform, platform => platform.user)
     platforms: Platform[];
 
-    @Field(() => Platform, { nullable: true })
+    @Field(() => Platform, {nullable: true})
     @ManyToOne(() => Platform, platform => platform.users)
     platform: Platform
+
+    @Field({nullable: true})
+    @Column({default: true})
+    status: boolean;
+
+    @Field(() => User, {nullable: true})
+    @ManyToOne(type => User, user => user.children)
+    parent: User;
+
+    @Field(() => [User], {nullable: true})
+    @OneToMany(type => User, user => user.parent)
+    children: User[];
+
+    @Field(() => [Offer], {nullable: true})
+    @OneToMany(type => Offer, offer => offer.user)
+    offers: Offer[];
 }
 
+
 @ObjectType()
-export class UserWithToken extends User{
+export class UserWithToken extends User {
     @Field(type => String)
     token: string
 }
+
+
 
 

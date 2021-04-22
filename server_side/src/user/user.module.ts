@@ -5,22 +5,25 @@ import {PassportModule} from "@nestjs/passport";
 import {JwtModule} from "@nestjs/jwt";
 
 import {UserService} from "./user.service";
-import {User} from "./user.entity";
 import {UserResolver} from "./user.resolver";
-
+import {User} from "./user.entity";
+import {Platform} from "../platform/platform.entity";
 
 //config
 import {jwtConstants} from "../../config/user.config";
 import {JwtStrategy} from "./auth/jwt.strategy";
 
+
+
+
 @Module({
     imports: [
-        TypeOrmModule.forFeature([User]),
+        TypeOrmModule.forFeature([User, Platform]),
         JwtModule.register({
             secret: jwtConstants.secret,
             signOptions: {expiresIn: '1d'},
         }),
-        PassportModule,
+        PassportModule
     ],
     providers: [UserService, UserResolver, JwtStrategy],
     exports: [UserService],

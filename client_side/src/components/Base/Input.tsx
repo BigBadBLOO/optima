@@ -2,13 +2,13 @@ import React from 'react'
 import {Button} from "@components/Base/Button";
 
 
-type typeValue = 'text' | 'number'
+type typeValue = 'text' | 'number' | 'password'
 
 type InputType = {
     icon?: string,
     type?: typeValue,
     value: string,
-    className: string,
+    className?: string,
     placeholder: string,
     label?: string,
     disabled?: boolean,
@@ -18,7 +18,7 @@ type InputType = {
 export const Input: React.FC<InputType> = ({icon, type = 'text', placeholder, label, className, disabled, value, setValue}) => {
 
     const classes = [
-        'rounded-md border px-2 py-1 m-2 place-content-center '
+        'rounded-md border px-2 py-1 m-2 place-content-center bg-white'
     ]
 
     classes.push(className)

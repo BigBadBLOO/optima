@@ -1,0 +1,36 @@
+query GetListWorker($platformName: String!, $pagination: Pagination!){
+    getListWorker(platformName: $platformName, pagination: $pagination) {
+        users {
+            id
+            username
+            email
+            group
+            status
+            offers{
+                id
+                name
+            }
+            parent {
+                id
+                username
+                group
+                status
+                offers {
+                    id
+                    name
+                }
+            }
+            children {
+                id
+                username
+                group
+                status
+                offers {
+                    id
+                    name
+                }
+            }
+        }
+        count
+    }
+}

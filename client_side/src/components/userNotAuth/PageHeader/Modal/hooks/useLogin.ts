@@ -12,7 +12,6 @@ export default function useLogin() {
 
   const [loginMutation] = useMutation(LoginUser, {
     update(cache, {data:{login}}) {
-      console.log(cache, login)
       cache.writeQuery({
         query: User,
         data: {

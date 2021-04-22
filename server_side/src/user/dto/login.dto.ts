@@ -4,6 +4,10 @@ import {Field, InputType} from "@nestjs/graphql";
 export class LoginUserDTO{
     @Field()
     email: string;
+
     @Field()
     password: string;
+
+    @Field({ nullable: true })
+    platformName?: string;
 }

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "client": "cd client_side && npm start",
-    "server": "cd server_side && npm start",
+    "server": "cd server_side && npm start:dev",
     "start": "concurrently \"npm run client\" \"npm run server\""
   },
   "repository": {
@@ -20,5 +20,6 @@
   "homepage": "https://github.com/BigBadBLOO/optima#readme",
   "devDependencies": {
     "concurrently": "^6.0.1"
-  }
+  },
+  "dependencies": {}
 }

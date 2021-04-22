@@ -9,6 +9,7 @@ import {GqlAuthGuard} from "./auth/gql-auth.guard";
 import {SignUpUserDTO} from "./dto/signUp.dto";
 import {LoginUserDTO} from "./dto/login.dto";
 
+
 export const CurrentUser = createParamDecorator(async (data: unknown, context: ExecutionContext) => {
     const ctx = GqlExecutionContext.create(context);
     return ctx.getContext().req.user;
@@ -26,7 +27,7 @@ export class UserResolver {
   @Query(returns => User)
   @UseGuards(GqlAuthGuard)
   async getCurrentUser(@CurrentUser() user: User): Promise<User | Error> {
-    return await this.userService.findByEmail(user.email);
+    return await this.userService.findUser(user);
   }
 
   @Mutation(returns => UserWithToken)
@@ -38,11 +39,4 @@ export class UserResolver {
   async signUp(@Args('signUpData') signUpData: SignUpUserDTO): Promise<UserWithToken> {
     return await this.userService.signUp(signUpData)
   }
-
-  // @Query(returns => [User])
-  // async users(): Promise<User[]> {
-  //     return await this.userService.findAll();
-  // }
-
-
 }
