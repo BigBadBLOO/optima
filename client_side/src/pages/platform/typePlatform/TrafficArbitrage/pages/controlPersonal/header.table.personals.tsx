@@ -1,17 +1,18 @@
 //core
-import React from "react";
+import React, {useState} from "react";
 import clsx from "clsx";
+import Popover from "react-popover";
 
 //types
 import {
-    user_group,
-    UserType
+    IControlPerson, user_group, UserGroupType,
 } from "@pages/platform/typePlatform/TrafficArbitrage/pages/controlPersonal/СontrolPersonal";
 
-const header_table_personals = (updateUser: (user: UserType) => void) => [
+const header_table_personals = (updateUser: (user: IControlPerson) => void) => [
     {
         Header: "ID",
         accessor: "id",
+        width: 100,
         Cell: ({row}: any) => {
             const expand = row.canExpand ? (
                 <span
@@ -35,12 +36,14 @@ const header_table_personals = (updateUser: (user: UserType) => void) => [
         Header: "Группа",
         accessor: "group",
         Cell: ({row}: any) => {
-            return user_group[row.values.group]
+            const group: keyof UserGroupType = row.values.group
+            return user_group[group]
         }
     },
     {
         Header: "Статус",
         accessor: "status",
+        width: 150,
         Cell: ({row}: any) => {
             return typeof row.values.status !== "undefined"
                 ? (
@@ -60,15 +63,39 @@ const header_table_personals = (updateUser: (user: UserType) => void) => [
     {
         Header: "Оффер",
         accessor: "offer",
+        Cell: ({row}: any) => {
+            const [showPopover, setShowPopover] = useState(false)
+            const offers = row.original.offerByUser
+              ? row.original.offerByUser.map((el: IOfferByUser) => el.offer)
+              : []
+            if (offers.length === 1) return offers[0].name
+            if (offers.length > 1) return <Popover
+                className="z-20"
+                body={<div className=" rounded p-4 bg-black bg-opacity-75 text-white z-20">
+                    {offers.map((offer: IOffer, index: number) => <p key={index}>{index + 1}. {offer.name}</p>)}
+                </div>}
+                isOpen={showPopover}>
+                <span
+                    className="underline"
+                    onMouseEnter={() => setShowPopover(true)}
+                    onMouseLeave={() => setShowPopover(false)}
+                >
+                    {offers[0].name}
+                </span>
+            </Popover>
+            return '-'
+        }
     },
     {
         Header: "Редактировать",
         accessor: "edit",
+        width: 200,
         Cell: ({row}: any) => {
-            const { __typename, ...data} = row.original
-            if(row.values.id) return <div className="flex cursor-pointer" onClick={() => {updateUser(data)}}>
-                <span className="material-icons mr-2 my-auto text-gray-500">edit</span>
-                <span className="my-auto text-gray-500">Редактировать</span>
+            if (row.values.id) return <div className="flex cursor-pointer" onClick={() => {
+                updateUser(row.original)
+            }}>
+                <span className="material-icons mr-2 my-auto">edit</span>
+                <span className="my-auto truncate">Редактировать</span>
             </div>
             return null
         }

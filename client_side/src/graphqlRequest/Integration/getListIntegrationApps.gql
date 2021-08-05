@@ -1,0 +1,10 @@
+query GetListIntegrationApps($platformName: String!){
+    getListIntegrationApps(platformName: $platformName) {
+        id
+        uid
+        name
+        key
+        version
+        category
+    }
+}

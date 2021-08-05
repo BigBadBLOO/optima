@@ -3,10 +3,9 @@ import React, {useState} from 'react'
 import clsx from "clsx";
 
 //components
-import Logo from "@components/Base/Logo/Logo";
 import {ElementNavbar, ListElement} from "@pages/platform/components/header/ElementNavbar";
 
-export type NavList = {
+export interface NavList {
   path?: string,
   name: string,
   active?: boolean,
@@ -14,7 +13,7 @@ export type NavList = {
   child?: Array<NavList>
 }
 
-type HeaderType = {
+interface HeaderType {
   navList: Array<NavList>
   platformName: string
 }

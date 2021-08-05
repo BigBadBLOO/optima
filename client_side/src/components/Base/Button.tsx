@@ -11,9 +11,10 @@ interface IButtonProps {
   disabled?: boolean
   type: SelectableButtonTypes
   onClick?: (e?: any) => void
+  submit?: boolean
 }
 
-export const Button: React.FC<IButtonProps> = ({icon, type, text, onClick, className, disabled, classNameText}) => {
+export const Button: React.FC<IButtonProps> = ({icon, type, text, onClick, className, disabled, classNameText, submit}) => {
   const classes = [
     'rounded-md p-2 place-content-center focus:outline-none flex '
   ]
@@ -24,17 +25,18 @@ export const Button: React.FC<IButtonProps> = ({icon, type, text, onClick, class
   else if (type === 'secondary') classes.push('text-white bg-myGray hover:bg-myGray-hover')
   // else if (type === 'withoutText') classes.push('text-gray-600 bg-gray-200')
 
-  if (disabled) classes.push(' cursor-not-allowed bg-opacity-50')
+  if (disabled) classes.push('cursor-not-allowed bg-opacity-50')
 
   return (
     <button
       className={classes.join(' ')}
       onClick={onClick}
       disabled={disabled}
+      type={submit ? 'submit' : 'button'}
     >
       {
         icon
-          ? <i className="material-icons float-left mr-1 my-auto">{icon}</i>
+          ? <i className="material-icons float-left my-auto">{icon}</i>
           : ''
       }
       {

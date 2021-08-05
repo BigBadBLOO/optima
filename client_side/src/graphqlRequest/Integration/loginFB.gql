@@ -1,0 +1,25 @@
+mutation LoginFB($token: String!){
+    loginFB(token: $token) {
+        id
+        uid
+        name
+        token
+        token_date_update
+        app {
+            id
+            name
+            version
+        }
+        user{
+            username
+        }
+        cabinets{
+            id
+            uid
+            name
+            factor
+            access_get_statistic
+        }
+
+    }
+}

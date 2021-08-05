@@ -70,7 +70,7 @@ const ModalBodyLogin: React.FC = () => {
           </span>
       </div>
       <div className="mb-2 text-center">
-        <Button className="mx-0 w-full" text="Войти в аккаунт" type="primary"/>
+        <Button className="mx-0 w-full" text="Войти в аккаунт" type="primary" submit={true}/>
       </div>
     </form>
   )

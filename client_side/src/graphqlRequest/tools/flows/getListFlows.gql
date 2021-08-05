@@ -1,0 +1,39 @@
+query GetListFlows($platformName: String!, $pagination: Pagination!){
+    getListFlows(platformName: $platformName, pagination: $pagination) {
+        flows {
+            id
+            name
+            redirect
+            account{
+                id
+                username
+            }
+            app{
+                id
+                name
+                utm_source
+            }
+            domain{
+                id
+                name
+                url
+            }
+            landingsByFlow{
+                id
+                percent
+                useInFlow
+                landing {
+                    id
+                    name
+                    isLanding
+                    url
+                    offer{
+                        id
+                        name
+                    }
+                }
+            }
+        }
+        count
+    }
+}

@@ -12,7 +12,7 @@ const HeaderTable: React.FC<IHeaderTable> = ({headerGroups}) => {
                 <div {...headerGroup.getHeaderGroupProps()}>
                     {
                         headerGroup.headers.map(column => (
-                            <div className="p-2 py-4 bg-gray-200 bg-opacity-50 transition-opacity hover:bg-opacity-25"
+                            <div className="p-4 bg-gray-200 bg-opacity-50 transition-opacity font-bold hover:bg-opacity-25"
                                  {...column.getHeaderProps()}
                             >
                                 <div className="flex flex-row pr-6 truncate" {...column.getSortByToggleProps()}>

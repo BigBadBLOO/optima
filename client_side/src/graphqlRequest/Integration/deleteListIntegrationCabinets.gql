@@ -1,0 +1,3 @@
+mutation DeleteListIntegrationCabinets($cabinets_id: [Float!]!){
+    deleteListIntegrationCabinets(cabinets_id: $cabinets_id)
+}

@@ -1,0 +1,12 @@
+mutation SaveFBCabinets($account_id: Float!, $cabinets: [CabinetIntegrationInput!]!){
+    saveFBCabinets(account_id: $account_id, cabinets: $cabinets) {
+        id
+        uid
+        name
+        factor
+        access_get_statistic
+        account{
+            id
+        }
+    }
+}

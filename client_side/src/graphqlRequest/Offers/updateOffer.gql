@@ -1,0 +1,5 @@
+mutation UpdateOffer($updateOfferData: UpdateOfferDTO!) {
+    updateOffer(updateOfferData: $updateOfferData){
+        id
+    }
+}

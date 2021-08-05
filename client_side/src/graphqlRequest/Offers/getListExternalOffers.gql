@@ -1,0 +1,26 @@
+query GetListExternalOffers($account_id: Float!){
+    getListExternalOffers(account_id: $account_id) {
+        uid
+        name
+        status
+        comment
+        payments {
+            name
+            price
+            paymentDesktop
+            paymentMobile
+            approve
+            targetAction
+            currency
+        }
+        sources {
+            name
+            allow
+        }
+        flows {
+            uid
+            name
+            comment
+        }
+    }
+}

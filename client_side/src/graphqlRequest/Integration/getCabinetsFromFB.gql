@@ -1,0 +1,9 @@
+query GetCabinetsFromFB($account_id: Float!){
+    getCabinetsFromFB(account_id: $account_id) {
+        uid
+        name
+        account{
+            name
+        }
+    }
+}

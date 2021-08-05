@@ -7,56 +7,64 @@ import {useAlert} from "react-alert";
 //components
 import Table from "@pages/platform/components/table/Table";
 import ModalAdmin from "@pages/platform/typePlatform/TrafficArbitrage/pages/controlPersonal/modals/Modal_admin"
+import header_table_personals from "./header.table.personals";
 
-//data
-import header_table_personals
-    from "@pages/platform/typePlatform/TrafficArbitrage/pages/controlPersonal/header.table.personals";
+//request
 import GetListWorker from "@gql/ControlPerson/getListWorker.gql";
 import DeleteWorker from "@gql/ControlPerson/deleteWorker.gql";
 
 //types
 import {URL_PARAMS} from "@pages/platform/Platform";
+import ModalTeamLead from "@pages/platform/typePlatform/TrafficArbitrage/pages/controlPersonal/modals/Modal_teamlead";
+import header_table_personals_teamLead
+    from "@pages/platform/typePlatform/TrafficArbitrage/pages/controlPersonal/header.table.personals.teamlead";
 
-export type UserType = {
-    id?: number
-    platform: string,
-    username: string,
-    email: string,
-    password?: string,
-    password_control?: string,
-    status: boolean,
-    group: string,
-    offers?: [],
-    children?: UserType[]
-    parent?: UserType
+export type UserGroupType = {
+    CLIENT_ADMIN: string,
+    CLIENT_TEAM_LEAD: string,
+    CLIENT_TRAFFIC_MANAGER: string,
 }
 
-export const user_group = {
+export const user_group: UserGroupType = {
     CLIENT_ADMIN: 'Администратор',
     CLIENT_TEAM_LEAD: 'Тимлид',
     CLIENT_TRAFFIC_MANAGER: 'Траффик-менеджер',
 }
 
-const ControlPersonal: React.FC = () => {
+export interface IControlPerson extends Omit<IUser, 'group'|'platform'|'parent'|'children'> {
+    platform?: string
+    status?: boolean
+    password?: string
+    password_control?: string
+    group?: keyof UserGroupType
+    offerByUser?: IOfferByUser[]
+    children?: IControlPerson[]
+    parent?: IControlPerson
+}
+
+interface IControlPersonal {
+    user: IUser
+}
+
+const ControlPersonal: React.FC<IControlPersonal> = ({user}) => {
     //initial
-    let persons = []
-    let pageCount = 1
-    let rowCount = 0
+    let persons: IControlPerson[] = []
+    let pageCount: number = 1
+    let rowCount: number = 0
 
     let params: URL_PARAMS = useParams();
     const alert = useAlert();
 
     const [[pageIndex, pageSize, sortBy], setPaginationParams] = useState([0, 100, []])
 
-    const initUser = {
+    const initUser: IControlPerson = {
         platform: params.platformId,
         username: '',
         email: '',
         password: '',
         password_control: '',
         status: true,
-        group: 'CLIENT_ADMIN',
-        children: []
+        group: 'CLIENT_TRAFFIC_MANAGER',
     }
     const [addUser, setAddUser] = useState(initUser)
 
@@ -66,7 +74,7 @@ const ControlPersonal: React.FC = () => {
     const [deleteArray, setDeleteArray] = useState([])
 
     //get list Worker
-    let {loading, error, data, refetch} = useQuery(GetListWorker, {
+    let {loading, data, refetch} = useQuery(GetListWorker, {
         variables: {
             platformName: params.platformId,
             pagination: {pageIndex, pageSize, sortBy}
@@ -76,23 +84,28 @@ const ControlPersonal: React.FC = () => {
     //update Worker
     const updateData = (data: any) => {
         setModalType("update")
-        data.platform = params.platformId
-        setAddUser(data)
+        setAddUser({...data, platform: params.platformId})
         setShowModal(true)
     }
 
     //delete workers
     const deleteData = () => {
-        const data = deleteArray.map(el => el.values.id)
+        let data = deleteArray
+        if(user.group === 'CLIENT_TEAM_LEAD'){
+            data = data.filter(el => el.values.group === 'CLIENT_TRAFFIC_MANAGER' || el.values.id === user.id)
+        }
+        data = data.map(el => el.values.id)
+
         deleteMutation({
             variables: {
                 deleteWorkerData: {
                     id: data
                 }
             }
-        }).then(r => {
+        }).then(() => {
             alert.success("Данные удалены");
-            refetch()
+            refetch().then(() => {
+            })
         })
     }
 
@@ -101,8 +114,13 @@ const ControlPersonal: React.FC = () => {
         pageCount = Math.ceil(data.getListWorker.count / pageSize)
         rowCount = data.getListWorker.count
     }
+    console.log(rowCount)
+    const columns = useMemo(() => {
+        return user.group === 'CLIENT_TEAM_LEAD'
+          ? header_table_personals_teamLead(updateData, user)
+          : header_table_personals(updateData)
 
-    const columns = useMemo(() => header_table_personals(updateData), [])
+    }, [])
 
     const table_options = {
         width: window.innerWidth - 112,
@@ -127,14 +145,23 @@ const ControlPersonal: React.FC = () => {
         }
     }
 
-    const modal_jsx = <ModalAdmin
+    let modal_jsx = <ModalAdmin
         show={showModal}
         showModal={setShowModal}
         user={addUser}
-        setUser={setAddUser}
         refetch={refetch}
         type={modalType}
     />
+
+    if (user.group === "CLIENT_TEAM_LEAD") {
+        modal_jsx = <ModalTeamLead
+            show={showModal}
+            showModal={setShowModal}
+            user={addUser}
+            refetch={refetch}
+            type={modalType}
+        />
+    }
 
     return (
         <>

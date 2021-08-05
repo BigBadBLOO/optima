@@ -1,5 +1,6 @@
 //core
 import React, {useEffect, useMemo} from "react";
+import clsx from "clsx";
 import {
     useTable,
     useBlockLayout,
@@ -13,9 +14,8 @@ import {
 import Pagination from "@pages/platform/components/table/components/Pagination";
 import HeaderTable from "@pages/platform/components/table/components/Header";
 import BodyTable from "@pages/platform/components/table/components/Body";
-import ControlTablePanel from "@pages/platform/components/table/components/ControlPanel";
+import ControlTablePanel, {IDateRange} from "@pages/platform/components/table/components/ControlPanel";
 import CheckBox from "@components/Base/CheckBox";
-import clsx from "clsx";
 
 export type TableOptions = {
     width?: number
@@ -32,23 +32,28 @@ export type TableOptions = {
         onClick: () => void
         setData: ([]) => void
     }
+    dateRange?: IDateRange
+    template?: string
 }
 
 interface TableType {
     columns: {
+        id?: string
+        width?: number
         Header: string | ((row: { value: string }) => any),
         accessor?: string,
         Cell?: (row: { value: string }) => any,
-        id?: string
     }[],
-    data: object[],
+    data: any[],
     options: TableOptions
 }
 
 const Table: React.FC<TableType> = ({columns, data, options}) => {
-
     const defaultColumn = useMemo(() => {
-        const width = options.width ? (options.width - 8 - (options.selected ? 35 : 0)) / columns.length : 150
+        const columns_with_width = columns.filter(el => el.width)
+        const count_columns_with_width = columns_with_width.length
+        const total_width = columns_with_width.reduce((acc, value) => acc += value.width, 0)
+        const width = options.width ? (options.width - 8 - (options.selected ? 35 : 0) - total_width) / (columns.length - count_columns_with_width) : 150
         return {
             minWidth: 100,
             width: width,
@@ -93,9 +98,9 @@ const Table: React.FC<TableType> = ({columns, data, options}) => {
             options.selected && hooks.visibleColumns.push(columns => [
                 {
                     id: 'selection',
-                    width: 35,
-                    minWidth: 35,
-                    maxWidth: 35,
+                    width: 40,
+                    minWidth: 40,
+                    maxWidth: 40,
                     Header: ({getToggleAllRowsSelectedProps}: any) => <CheckBox className="m-1"
                         type="indeterminate" {...getToggleAllRowsSelectedProps()}/>,
                     Cell: ({row}: any) => <CheckBox className="m-1" type="indeterminate" {...row.getToggleRowSelectedProps()}/>
@@ -111,11 +116,11 @@ const Table: React.FC<TableType> = ({columns, data, options}) => {
 
     useEffect(() => {
         if (options.delete) options.delete.setData(selectedFlatRows)
-    }, [selectedRowIds])
+    }, [Object.keys(selectedRowIds).length])
 
     return (
         <>
-            <ControlTablePanel pageSize={pageSize} setPageSize={setPageSize} options={options}/>
+            <ControlTablePanel pageSize={pageSize} setPageSize={setPageSize} options={options} selectedRows={selectedFlatRows}/>
             <div className="bg-white shadow rounded-md p-2">
                 <div className="overflow-x-auto" {...getTableProps()}>
                     <HeaderTable headerGroups={headerGroups}/>

@@ -1,0 +1,52 @@
+query GetListLeads($platformName: String!, $pagination: Pagination!, $dateRange: DateRange!){
+    getListLeads(platformName: $platformName, pagination: $pagination, dateRange: $dateRange) {
+        leads {
+            id
+            uid
+            payment
+            isDouble
+            date_create
+            offer{
+                name
+            }
+            offer_name
+            prelanding{
+                name
+            }
+            prelanding_name
+            landing{
+                name
+            }
+            landing_name
+            flow{
+                name
+            }
+            flow_name
+            geo
+            pp{
+                name
+            }
+            app{
+                name
+            }
+            name
+            phone
+            birth
+            comment
+            user{
+                username
+                group
+                parent{
+                    username
+                }
+            }
+            campaign_name
+            adset_name
+            ad_name
+            status
+            date_status
+
+        }
+        count
+    }
+}

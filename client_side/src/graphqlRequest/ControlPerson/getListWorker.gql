@@ -6,28 +6,36 @@ query GetListWorker($platformName: String!, $pagination: Pagination!){
             email
             group
             status
-            offers{
+            offerByUser{
                 id
-                name
-            }
-            parent {
-                id
-                username
-                group
-                status
-                offers {
+                offer{
                     id
                     name
                 }
             }
+            parent {
+                id
+                username
+                email
+                group
+                status
+            }
             children {
                 id
                 username
+                email
                 group
                 status
-                offers {
+                offerByUser{
                     id
-                    name
+                    offer{
+                        id
+                        name
+                    }
+                }
+                parent {
+                    id
+                    username
                 }
             }
         }

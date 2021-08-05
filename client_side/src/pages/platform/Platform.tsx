@@ -15,21 +15,18 @@ import User from "@gql/user.gql";
 import AgencyLidgen from "@pages/platform/typePlatform/AgencyLidgen/AgencyLidgen";
 import TrafficArbitrage from "@pages/platform/typePlatform/TrafficArbitrage/TrafficArbitrage";
 
-//types
-import {PlatformType} from "@/types";
-import {UserType} from "@/types";
 
-
-export type URL_PARAMS = {
+export interface URL_PARAMS {
   platformId?: string | undefined,
   page?: string | undefined
+  param1?: string | undefined
 }
 
-export type PageType = {
+export interface IPage {
   pathToPlatform: string
   activePage: string
-  platform: PlatformType
-  user: UserType
+  platform: IPlatform
+  user: IUser
 }
 
 const Platform: React.FC = () => {
@@ -44,10 +41,10 @@ const Platform: React.FC = () => {
 
   if(error) return <AuthPlatform/>
 
-  const user: UserType = data.getCurrentUser
+  const user: IUser = data.getCurrentUser
 
   if (!idPlatform) {
-    const root_dir_jsx = user.platforms && <div>{user.platforms.map((single_platform: PlatformType) => {
+    const root_dir_jsx = user.platforms && <div>{user.platforms.map(single_platform => {
       return <Link key={single_platform.id} to={'/platforms/' + single_platform.platformName}>
         <p className="m-2">
           Войти на платформу с id {single_platform.id} и названием {single_platform.platformName}
@@ -64,7 +61,7 @@ const Platform: React.FC = () => {
     )
   }
 
-  const platform = user.platforms.find((platform: PlatformType) => platform.platformName === idPlatform) || user.platform
+  const platform = user.platforms.find(platform => platform.platformName === idPlatform) || user.platform
   if (!platform)  return <AuthPlatform/>
 
   if (platform.type === 'AgencyLidgen') {

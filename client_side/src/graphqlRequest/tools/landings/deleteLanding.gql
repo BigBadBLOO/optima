@@ -1,0 +1,3 @@
+mutation DeleteLanding($deleteLandingData: DeleteLandingDTO!) {
+    deleteLanding(deleteLandingData: $deleteLandingData)
+}

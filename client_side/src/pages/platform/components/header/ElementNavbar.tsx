@@ -7,7 +7,7 @@ import CSSTransition from "react-transition-group/CSSTransition";
 //styles
 import './elementNavbar.css'
 
-type Elem = {
+interface Elem {
   path?: string
   active?: boolean
   icon?: string
@@ -15,7 +15,7 @@ type Elem = {
   child?: Array<Elem>
 }
 
-type ElementNavbar = {
+interface ElementNavbar {
   elem : Elem
 }
 

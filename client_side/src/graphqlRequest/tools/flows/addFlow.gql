@@ -1,0 +1,5 @@
+mutation AddFlow($addFlowData: AddFlowDTO!) {
+    addFlow(addFlowData: $addFlowData){
+        id
+    }
+}

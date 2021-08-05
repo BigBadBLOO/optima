@@ -1,0 +1,46 @@
+query GetListLandings($platformName: String!, $pagination: Pagination!, $isLanding: Boolean!){
+    getListLandings(platformName: $platformName, pagination: $pagination, isLanding: $isLanding) {
+        landings {
+            id
+            name
+            url
+            isLanding
+            redirect
+            landingsByFlow{
+                id
+                useInFlow
+            }
+            account{
+                id
+                username
+            }
+            offer{
+                id
+                name
+                flows{
+                    id
+                    uid
+                    name
+                }
+                payments{
+                    id
+                    name
+                    price
+                    paymentDesktop
+                }
+            }
+            flow{
+                id
+                uid
+                name
+            }
+            payment{
+                id
+                name
+                price
+                paymentDesktop
+            }
+        }
+        count
+    }
+}

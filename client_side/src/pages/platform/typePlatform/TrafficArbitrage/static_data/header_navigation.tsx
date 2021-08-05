@@ -1,14 +1,18 @@
 //core
-import React from "react";
+import React, {lazy, Suspense} from "react";
+import GlobalLoader from "@components/Loaders/GlobaLoader";
 
 //pages
-import ControlPersonal from "@pages/platform/typePlatform/TrafficArbitrage/pages/controlPersonal/СontrolPersonal";
 
-//types
-import {UserType} from "@/types";
+const Leads = lazy(() => import('../pages/leads/Leads'));
+const ControlPersonal = lazy(() => import('../pages/controlPersonal/СontrolPersonal'));
+const Integrations = lazy(() => import('../pages/integrations/Integrations'));
+const Offers = lazy(() => import('../pages/offers/Offers'));
+const Landings = lazy(() => import('../pages/tools/landings/Landings'));
+const Prelandings = lazy(() => import('../pages/tools/prelandings/Prelandings'));
+const Flows = lazy(() => import('../pages/tools/flows/Flows'));
 
-
-const header_navigation = (pathToPlatform: string, activePage: string, user: UserType) => {
+const header_navigation = (pathToPlatform: string, activePage: string, user: IUser) => {
   return [
     {
       path: pathToPlatform + '/',
@@ -24,7 +28,7 @@ const header_navigation = (pathToPlatform: string, activePage: string, user: Use
       active: activePage === 'leads',
       icon: 'assignment_ind',
       has_user_access: ['CLIENT', 'CLIENT_ADMIN', 'CLIENT_TEAM_LEAD', 'CLIENT_TRAFFIC_MANAGER'].includes(user.group),
-      component: <div>Leads</div>
+      component:  <Suspense fallback={GlobalLoader}><Leads user={user}/></Suspense>
     },
     {
       name: 'Аналитика',
@@ -74,7 +78,7 @@ const header_navigation = (pathToPlatform: string, activePage: string, user: Use
       active: activePage === 'integration',
       icon: 'extension',
       has_user_access: ['CLIENT', 'CLIENT_ADMIN', 'CLIENT_TEAM_LEAD', 'CLIENT_TRAFFIC_MANAGER'].includes(user.group),
-      component: <div>integration</div>
+      component: <Suspense fallback={GlobalLoader}><Integrations/></Suspense>
     },
     {
       name: 'Сотрудники',
@@ -86,14 +90,14 @@ const header_navigation = (pathToPlatform: string, activePage: string, user: Use
           name: 'Управление сотрудниками',
           active: activePage === 'controlPersonal',
           has_user_access: ['CLIENT', 'CLIENT_ADMIN', 'CLIENT_TEAM_LEAD'].includes(user.group),
-          component: <ControlPersonal/>
+          component: <Suspense fallback={GlobalLoader}><ControlPersonal user={user}/></Suspense>
         },
         {
           path: pathToPlatform + '/efficiencyPersonal',
           name: 'Эффективность сотрудников',
           active: activePage === 'efficiencyPersonal',
           has_user_access: ['CLIENT', 'CLIENT_ADMIN', 'CLIENT_TEAM_LEAD'].includes(user.group),
-          component: <div>efficiencyPersonal</div>
+          component: <Suspense fallback={GlobalLoader}><div>efficiencyPersonal</div></Suspense>
         }
       ]
     },
@@ -103,7 +107,7 @@ const header_navigation = (pathToPlatform: string, activePage: string, user: Use
       active: activePage === 'offers',
       icon: 'work',
       has_user_access: ['CLIENT', 'CLIENT_ADMIN', 'CLIENT_TEAM_LEAD', 'CLIENT_TRAFFIC_MANAGER'].includes(user.group),
-      component: <div>offers</div>
+      component: <Suspense fallback={GlobalLoader}><Offers user={user}/></Suspense>
     },
     {
       name: 'Инструменты',
@@ -115,21 +119,21 @@ const header_navigation = (pathToPlatform: string, activePage: string, user: Use
           name: 'Лендинги',
           active: activePage === 'landings',
           has_user_access: ['CLIENT', 'CLIENT_ADMIN', 'CLIENT_TEAM_LEAD', 'CLIENT_TRAFFIC_MANAGER'].includes(user.group),
-          component: <div>landings</div>
+          component: <Suspense fallback={GlobalLoader}><Landings/></Suspense>
         },
         {
           path: pathToPlatform + '/prelandings',
           name: 'Прелендинги',
           active: activePage === 'prelandings',
           has_user_access: ['CLIENT', 'CLIENT_ADMIN', 'CLIENT_TEAM_LEAD', 'CLIENT_TRAFFIC_MANAGER'].includes(user.group),
-          component: <div>prelandings</div>
+          component: <Suspense fallback={GlobalLoader}><Prelandings/></Suspense>
         },
         {
           path: pathToPlatform + '/flows',
           name: 'Потоки',
           active: activePage === 'flows',
           has_user_access: ['CLIENT', 'CLIENT_ADMIN', 'CLIENT_TEAM_LEAD', 'CLIENT_TRAFFIC_MANAGER'].includes(user.group),
-          component: <div>flows</div>
+          component: <Suspense fallback={GlobalLoader}><Flows/></Suspense>
         },
       ]
     },

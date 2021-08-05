@@ -1,0 +1,5 @@
+mutation UpdateLanding($updateLandingData: UpdateLandingDTO!) {
+    updateLanding(updateLandingData: $updateLandingData){
+        id
+    }
+}

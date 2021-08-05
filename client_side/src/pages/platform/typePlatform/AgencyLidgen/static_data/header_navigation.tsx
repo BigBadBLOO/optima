@@ -1,14 +1,11 @@
 //core
-import React from "react";
+import React, {lazy, Suspense} from "react";
 
 //pages
-import ControlPersonal from "@pages/platform/typePlatform/AgencyLidgen/pages/controlPersonal/СontrolPersonal";
+const ControlPersonal = lazy(() => import('../pages/controlPersonal/СontrolPersonal'));
+import GlobalLoader from "@components/Loaders/GlobaLoader";
 
-//types
-import {UserType} from "@/types";
-
-
-const header_navigation = (pathToPlatform: string, activePage: string, user: UserType) => {
+const header_navigation = (pathToPlatform: string, activePage: string, user: IUser) => {
   return [
     {
       path: pathToPlatform + '/',
@@ -103,7 +100,7 @@ const header_navigation = (pathToPlatform: string, activePage: string, user: Use
           name: 'Управление сотрудниками',
           active: activePage === 'controlPersonal',
           has_user_access: ['CLIENT', 'CLIENT_ADMIN', 'CLIENT_PROJECT_MANAGER'].includes(user.group),
-          component: <ControlPersonal/>
+          component:  <Suspense fallback={GlobalLoader}><ControlPersonal/></Suspense>
         },
         {
           path: pathToPlatform + '/controlContractor',

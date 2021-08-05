@@ -21,6 +21,7 @@ const AuthPlatform: React.FC = () => {
 
     const [loginMutation] = useMutation(LoginUser, {
         update(cache, {data: {login}}) {
+            login && Cookies.set('token', login.token)
             cache.writeQuery({
                 query: User,
                 data: {
@@ -36,28 +37,30 @@ const AuthPlatform: React.FC = () => {
         platformName: params.platformId
     })
 
+    const [error, setError] = useState('')
+
     const login = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log(user)
         loginMutation({
             variables: {
                 loginData: user
             }
         })
-            .then(r => r.data.login)
-            .then(r => Cookies.set('token', r.token))
-        // .catch(e => setErrorEmail(e.message))
+        .catch(e => setError(e.message))
     }
 
     return <div className="flex h-screen">
         <div className="m-auto shadow p-10 bg-white">
-            <p className="text-2xl md:text-4xl mb-4 text-center underline ">{params.platformId}</p>
+            <p className="text-2xl sm:text-4xl mb-4 text-center underline ">{params.platformId}</p>
             <form className="pt-4" onSubmit={login}>
+                <p>Эл. почта</p>
                 <Input
                     value={user.email}
+                    className="sm:w-64"
                     placeholder="Введите email..."
                     setValue={value => setUser(prevState => ({...prevState, email: value}))}
                 />
+                <p>Пароль</p>
                 <Input
                     className="bg-white"
                     type="password"
@@ -65,8 +68,9 @@ const AuthPlatform: React.FC = () => {
                     placeholder="Введите пароль..."
                     setValue={value => setUser(prevState => ({...prevState, password: value}))}
                 />
+                { error && <p className="text-center text-red-500">{error}</p>}
                 <div className="px-2">
-                    <Button type="primary" text="Войти" className="w-full mt-4" />
+                    <Button type="primary" submit={true} text="Войти" className="w-full mt-4" />
                 </div>
             </form>
         </div>

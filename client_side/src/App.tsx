@@ -24,11 +24,11 @@ const AlertTemplate = ({style, options, message, close}: any) => {
                 ...style,
                 margin: 0
             }}
-            className={clsx("h-12 p-2 bg-green-100 w-screen text-center z-50",
+            className={clsx("h-12 p-2 w-screen text-center z-50",
                 {
                     'bg-green-50 text-green-600': options.type === 'success',
                     'bg-red-50 text-red-600': options.type === 'error',
-                    'bg-blue-50 bg-blue-600': options.type === 'info',
+                    'bg-blue-50 text-blue-400': options.type === 'info',
                 })}
             onClick={close}
         >
@@ -39,7 +39,7 @@ const AlertTemplate = ({style, options, message, close}: any) => {
 
 
 const App: React.FC = () => {
-    const {loading, error, data} = useQuery(User);
+    const {loading, data} = useQuery(User);
 
     if (loading) return <GlobalLoader/>;
 
