@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest')
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     target: 'web',
@@ -52,6 +53,7 @@ module.exports = {
                     "postcss-loader"
                 ]
             },
+
             {
                 test: /\.gql$/,
                 exclude: /node_modules/,
@@ -74,6 +76,18 @@ module.exports = {
                         options: {
                             name: '[name].[ext]',
                             outputPath: 'fonts/'
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.(png|jpe?g|gif)(\?v=\d+\.\d+\.\d+)?$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]',
+                            outputPath: 'images/'
                         }
                     }
                 ]
@@ -108,6 +122,11 @@ module.exports = {
                     sizes: [96, 128, 192, 256, 384, 512]
                 },
             ]
-        })
+        }),
+        new CopyPlugin({
+            patterns: [
+                { from: "src/public/js", to: "js" },
+            ],
+        }),
     ]
 };

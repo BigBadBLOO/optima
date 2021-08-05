@@ -1,0 +1,3 @@
+mutation DeleteOffer($deleteOfferData: DeleteOfferDTO!) {
+    deleteOffer(deleteOfferData: $deleteOfferData)
+}

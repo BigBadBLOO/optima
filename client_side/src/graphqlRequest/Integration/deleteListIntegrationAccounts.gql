@@ -1,0 +1,3 @@
+mutation DeleteListIntegrationAccounts($accounts_id: [Float!]!){
+    deleteListIntegrationAccounts(accounts_id: $accounts_id)
+}

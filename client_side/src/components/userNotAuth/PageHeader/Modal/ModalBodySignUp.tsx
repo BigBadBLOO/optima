@@ -108,7 +108,7 @@ const ModalBodySignUp: React.FC = () => {
                       </span>
                 </div>
                 <div className="mb-4 text-center">
-                    <Button className="mx-0 w-full" text="Зарегистрироваться" type="primary"/>
+                    <Button className="mx-0 w-full" text="Зарегистрироваться" type="primary" submit={true}/>
                 </div>
             </form>
 

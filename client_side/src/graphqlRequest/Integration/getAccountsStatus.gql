@@ -1,0 +1,6 @@
+query GetAccountsStatus($accounts_id: [Float!]!){
+    getAccountsStatus(accounts_id: $accounts_id){
+        id,
+        status
+    }
+}

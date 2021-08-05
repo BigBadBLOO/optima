@@ -1,8 +1,11 @@
+//core
 import React, {useState} from "react";
 import {useMutation} from "@apollo/client";
+import Cookies from "js-cookie";
+
+//requests
 import LoginUser from "@gql/loginUser.gql";
 import User from "@gql/user.gql";
-import Cookies from "js-cookie";
 
 export default function useLogin() {
   const [email, setEmail] = useState('');
@@ -12,7 +15,6 @@ export default function useLogin() {
 
   const [loginMutation] = useMutation(LoginUser, {
     update(cache, {data:{login}}) {
-      console.log(cache, login)
       cache.writeQuery({
         query: User,
         data: {

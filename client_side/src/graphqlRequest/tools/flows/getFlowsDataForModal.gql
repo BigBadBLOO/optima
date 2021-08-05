@@ -1,0 +1,25 @@
+query GetFlowsData($platformName: String!){
+    getListIntegrationApps(platformName: $platformName) {
+        id
+        uid
+        name
+        category
+        utm_source
+    }
+    getListFlowDomains(platformName: $platformName){
+        id
+        name
+        url
+    }
+    getLandings(platformName: $platformName) {
+        id
+        name
+        url
+        isLanding
+        redirect
+        offer{
+            id
+            name
+        }
+    }
+}

@@ -6,6 +6,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 //modules
 import { UserModule } from './user/user.module';
 import { PlatformModule } from './platform/platform.module';
+import { ApiModule } from './api/api.module';
 
 @Module({
   imports: [
@@ -15,8 +16,8 @@ import { PlatformModule } from './platform/platform.module';
     }),
     UserModule,
     PlatformModule,
+    ApiModule,
   ],
-  controllers: [],
   providers: [],
 })
 export class AppModule {}

@@ -1,0 +1,3 @@
+mutation DeleteWorker($deleteWorkerData: DeleteWorkerDTO!) {
+    deleteWorker(deleteWorkerData: $deleteWorkerData)
+}

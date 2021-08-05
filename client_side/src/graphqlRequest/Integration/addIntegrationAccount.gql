@@ -1,0 +1,24 @@
+mutation AddIntegrationAccount($uid: String!, $name: String!, $token: String!, $app_id: Float!,  $platformName: String!){
+    addIntegrationAccount(uid: $uid, name: $name, token: $token, platformName: $platformName, app_id: $app_id) {
+        id
+        uid
+        name
+        token
+        token_date_update
+        app {
+            id
+            name
+            version
+        }
+        user{
+            username
+        }
+        cabinets{
+            id
+            uid
+            name
+            factor
+            access_get_statistic
+        }
+    }
+}

@@ -7,6 +7,7 @@ import LandingPage from "@pages/UserNotAuth/LandingPage";
 import UserAgreement from "@pages/UserNotAuth/UserAgreement/UserAgreement";
 import PrivacyPolicy from "@pages/PrivacyPolicy";
 import PageNotFound from "@pages/ErrorPages/PageNotFound404";
+import Platform from "@pages/platform/Platform";
 
 const RouterNavbarNoAuth: React.FC = () => {
   return (
@@ -17,7 +18,7 @@ const RouterNavbarNoAuth: React.FC = () => {
       {/*политика конфиденциальности*/}
       <Route path="/privacyPolicy/" exact component={PrivacyPolicy}/>
       {/*/!*выбранная платформа*!/*/}
-      {/*<Route path="/platforms/:platformId/:page?/" component={Platform}/>*/}
+      <Route path="/platforms/:platformId/:page?/" component={Platform}/>
       {/*/!*Страница не найдена*!/*/}
       <Route component={PageNotFound}/>
     </Switch>

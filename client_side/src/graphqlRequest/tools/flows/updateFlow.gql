@@ -1,0 +1,5 @@
+mutation UpdateFlow($updateFlowData: UpdateFlowDTO!) {
+    updateFlow(updateFlowData: $updateFlowData){
+        id
+    }
+}

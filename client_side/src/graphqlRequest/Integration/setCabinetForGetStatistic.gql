@@ -1,0 +1,12 @@
+mutation SetCabinetForGetStatistic($cabinet_id: Float!, $factor: Float!, $value: Boolean!){
+    setCabinetForGetStatistic(cabinet_id: $cabinet_id, factor: $factor, value: $value) {
+        id
+        uid
+        name
+        factor
+        access_get_statistic
+        account{
+            id
+        }
+    }
+}

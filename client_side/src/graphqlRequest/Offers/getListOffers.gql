@@ -1,0 +1,48 @@
+query GetListOffers($platformName: String!, $pagination: Pagination!){
+    getListOffers(platformName: $platformName, pagination: $pagination) {
+        offers {
+            id
+            uid
+            name
+            status
+            comment
+            payments {
+                id
+                name
+                price
+                paymentDesktop
+                paymentMobile
+                approve
+                newApprove
+                targetAction
+                currency
+            }
+            sources {
+                name
+                allow
+            }
+            flows {
+                id
+                uid
+                name
+                comment
+            }
+            campaignId{
+                id
+                uid
+                type
+                user{
+                    id
+                }
+            }
+            offerByUser{
+                id
+                user{
+                    id
+                    username
+                }
+            }
+        }
+        count
+    }
+}

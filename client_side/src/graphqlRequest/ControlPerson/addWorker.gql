@@ -1,0 +1,45 @@
+mutation AddWorker($addWorkerData: AddWorkerDTO!) {
+    addWorker(addWorkerData: $addWorkerData){
+        id
+        username
+        email
+        group
+        status
+        offerByUser{
+            id
+            offer{
+                id
+                name
+            }
+        }
+        parent {
+            id
+            username
+            email
+            group
+            status
+            offerByUser{
+                id
+                offer{
+                    id
+                    name
+                }
+            }
+        }
+        children {
+            id
+            username
+            email
+            group
+            status
+            offerByUser{
+                id
+                offer{
+                    id
+                    name
+                }
+            }
+        }
+
+    }
+}

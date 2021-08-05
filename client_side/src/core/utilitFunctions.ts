@@ -8,3 +8,4 @@ function prevMassValue(mass: Array<any>, index: number) {
   let idx = index - 1
   return idx < 0 ? mass.length : idx
 }
+
